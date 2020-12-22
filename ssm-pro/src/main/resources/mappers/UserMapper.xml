@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.msi.dao.UserDao">
+
+    <sql id="tableName">
+        user
+    </sql>
+
+    <sql id="allCol">
+        id, user_name, user_code, password, user_flag, email, sex, birthday, address, zipcode, phone, profession
+    </sql>
+
+    <select id="findUserList" parameterType="com.msi.entity.User" resultType="com.msi.entity.User">
+        SELECT <include refid="allCol"/>
+        FROM <include refid="tableName"/>
+    </select>
+
+</mapper>
