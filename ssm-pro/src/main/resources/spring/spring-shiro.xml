@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!-- 配置securityManager对象(Shiro框架的核心) -->
+    <bean id="securityManager"
+          class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="Realm" ref="shiroRealm"/>
+        <property name="cacheManager" ref="cacheManager"/>
+        <property name="SessionManager" ref="sessionManager"></property>
+    </bean>
+
+    <!-- 配置自己域realm实现  -->
+<!--    <bean id="shiroUserRealm" class="com.msi.shiro.ShiroUserRealm"></bean>-->
+    <bean id="shiroRealm" class="com.msi.shiro.ShiroRealm"></bean>
+
+
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="SecurityManager" ref="securityManager"/>
+        <!-- 指定认证页面 -->
+        <property name="LoginUrl" value="/login"/>
+        <!-- 设置请求过滤规则 -->
+        <property name="filterChainDefinitions">
+            <value>
+                <!-- 注意：规则是有顺序的，从上到下，拦截范围必须是从小到大的 -->
+                <!--  url = 拦截规则（anon为匿名，authc为要登录后，才能访问，logout登出过滤） -->
+                /static/**=anon
+                /login = anon
+                /logout = logout
+                /register = anon
+                /**= authc
+            </value>
+        </property>
+    </bean>
+
+    <!-- 添加授权配置 -->
+    <!-- 配置bean对象的生命周期管理 -->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor">
+    </bean>
+
+    <!-- 配置Bean对象的代理 -->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor">
+    </bean>
+
+    <!-- 配置授权属性-->
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="SecurityManager" ref="securityManager"/>
+    </bean>
+
+    <!-- 添加ehcache配置 -->
+    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManagerConfigFile" value="classpath:ehcache.xml"/>
+    </bean>
+
+
+
+    <!-- 添加SessionManager配置 （设置session超时时间）-->
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <!-- 设置全局session的超时时间 （单位为毫秒）-->
+        <property name="GlobalSessionTimeout" value="3600000"/>
+        <!-- 设置是否删除无效session -->
+        <property name="DeleteInvalidSessions" value="true"></property>
+    </bean>
+
+
+
+
+
+</beans>

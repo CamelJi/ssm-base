@@ -19,14 +19,24 @@
     <mvc:default-servlet-handler/>
 
     <!-- 数据源与事务-->
-    <import resource="classpath:spring-jdbc.xml"/>
+    <import resource="classpath:spring/spring-jdbc.xml"/>
     <!-- mybatis -->
-    <import resource="classpath:spring-mybatis.xml"/>
+    <import resource="classpath:spring/spring-mybatis.xml"/>
+    <!-- shiro -->
+    <import resource="classpath:spring/spring-shiro.xml"/>
 
     <!-- 配置视图解析器对象 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="Prefix" value="/"/>
-<!--        <property name="Suffix" value=".*"/>-->
+        <property name="Suffix" value=".jsp"/>
     </bean>
+
+    <!-- 配置shiro开启注解支持 -->
+    <!--<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor"/>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>-->
 
 </beans>
