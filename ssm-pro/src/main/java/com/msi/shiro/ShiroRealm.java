@@ -1,5 +1,6 @@
 package com.msi.shiro;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.msi.dao.SysUserDao;
 import com.msi.entity.SysUser;
 import org.apache.shiro.authc.*;
@@ -12,8 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class ShiroRealm extends AuthenticatingRealm {
 
-    @Autowired
-    private SysUserDao sysUserDao;
 
     /**
      * 设置凭证匹配器(认证时会将用户输入密码进行加密然后和数据库查询出密码进行比对)
@@ -27,7 +26,6 @@ public class ShiroRealm extends AuthenticatingRealm {
         // 加密次数
         cMatcher.setHashIterations(10);
         super.setCredentialsMatcher(cMatcher);
-
     }
 
 
@@ -40,8 +38,12 @@ public class ShiroRealm extends AuthenticatingRealm {
         //1.获取客户端提交的用户信息
         UsernamePasswordToken upToken = (UsernamePasswordToken)token;
         String username = upToken.getUsername();
+
+        QueryWrapper<SysUser> queryWrapper = new QueryWrapper<SysUser>();
+        queryWrapper.eq("user_name", username);
         //2.基于用户名从数据库查询用户信息
-        SysUser user = sysUserDao.getUserByUsername(username);
+        SysUser user = new SysUser().selectOne(queryWrapper);
+
         //3.校验用户信息(用户存在吗)
         if(user == null) {
             throw new UnknownAccountException("用户名或密码有误！");

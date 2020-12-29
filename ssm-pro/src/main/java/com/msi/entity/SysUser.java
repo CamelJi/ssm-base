@@ -1,16 +1,26 @@
 package com.msi.entity;
 
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
+
 import java.io.Serializable;
 import java.util.Date;
 
-public class SysUser implements Serializable {
+@TableName("sys_user")
+public class SysUser extends Model<SysUser> implements Serializable {
 
     private static final long serialVersionUID = 4876365734841022438L;
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
+    @TableField(value = "user_name")
     private String userName;
 
+    @TableField(value = "user_code")
     private String userCode;
 
     private String password;
@@ -124,6 +134,11 @@ public class SysUser implements Serializable {
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    @Override
+    protected Serializable pkVal() {
+        return id;
     }
 
     @Override

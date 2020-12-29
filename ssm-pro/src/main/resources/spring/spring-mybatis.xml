@@ -10,7 +10,7 @@
 
     <!-- MyBatis SqlSessionFactoryBean 配置 -->
     <!-- 注意：这里使用的是MP的MybatisSqlSessionFactoryBean，而不是Mybatis的，因为MP需要进行相应代理 -->
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <bean id="sqlSessionFactory" class="com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean">
         <!-- 配置数据源 -->
         <property name="dataSource" ref="dataSource" />
         <!-- 配置别名包路径 -->
@@ -21,4 +21,10 @@
         <!-- 配置Mybatis配置文件 -->
         <property name="configLocation" value="classpath:mybatis-config.xml" />
     </bean>
+
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.baomidou.mybatisplus.samples.quickstart.mapper"/>
+    </bean>
+
 </beans>
