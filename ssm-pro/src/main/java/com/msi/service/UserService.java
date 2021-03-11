@@ -1,10 +1,10 @@
 package com.msi.service;
 
-import com.msi.entity.User;
+import com.msi.vo.UserVO;
 
 import java.util.List;
 
 public interface UserService {
 
-    List<User> findUserList(User user);
+    List<UserVO> findUserList(UserVO userVO);
 }

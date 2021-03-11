@@ -29,6 +29,7 @@
                 /login = anon
                 /logout = logout
                 /register = anon
+                /redis/** = anon
                 /**= authc
             </value>
         </property>

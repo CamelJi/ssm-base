@@ -10,7 +10,7 @@
         id, user_name, user_code, password, user_flag, email, sex, birthday, address, zipcode, phone, profession
     </sql>
 
-    <select id="findUserList" parameterType="com.msi.entity.User" resultType="com.msi.entity.User">
+    <select id="findUserList" parameterType="com.msi.vo.UserVO" resultType="com.msi.vo.UserVO">
         SELECT <include refid="allCol"/>
         FROM <include refid="tableName"/>
     </select>

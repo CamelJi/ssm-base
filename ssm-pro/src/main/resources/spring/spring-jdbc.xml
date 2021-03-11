@@ -15,7 +15,7 @@
         https://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!-- 数据源,导入properties -->
-    <context:property-placeholder location="classpath:jdbc.properties"/>
+    <context:property-placeholder location="classpath:config/jdbc.properties"/>
 
     <!-- 数据源配置信息 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
