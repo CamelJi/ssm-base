@@ -1,6 +1,8 @@
 package com.msi.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.msi.dao.SysUserDao;
 import com.msi.entity.SysUser;
 import com.msi.service.SysUserService;
@@ -12,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class SysUserServiceImpl implements SysUserService {
+public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> implements SysUserService {
 
     @Autowired
     private SysUserDao sysUserDao;
@@ -29,5 +31,10 @@ public class SysUserServiceImpl implements SysUserService {
     public List<SysUser> getUserAll() {
         SysUser sysUser = new SysUser();
         return sysUser.selectAll();
+    }
+
+    @Override
+    public IPage<SysUser> selectPageVo(Page<SysUser> page, String userName) {
+        return sysUserDao.selectPageVo(userName, page);
     }
 }

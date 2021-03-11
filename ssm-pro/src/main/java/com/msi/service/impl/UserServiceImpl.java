@@ -1,5 +1,6 @@
 package com.msi.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.msi.dao.UserDao;
 import com.msi.entity.User;
 import com.msi.service.UserService;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserService {
 
     @Autowired
     private UserDao userDao;

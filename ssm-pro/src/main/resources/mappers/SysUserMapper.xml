@@ -40,4 +40,14 @@
         AND password = #{password}
     </select>
 
+    <select id="selectPageVo" resultType="com.msi.entity.SysUser">
+        SELECT <include refid="allCol"/>
+        FROM <include refid="table_name"/>
+        <where>
+            <if test="userName != null and userName != ''">
+                user_name = #{userName}
+            </if>
+        </where>
+    </select>
+
 </mapper>

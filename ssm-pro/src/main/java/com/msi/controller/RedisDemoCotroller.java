@@ -1,6 +1,10 @@
 package com.msi.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.msi.dao.SysUserDao;
 import com.msi.entity.SysUser;
+import com.msi.service.SysUserService;
 import com.msi.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +18,9 @@ public class RedisDemoCotroller {
     @Autowired
     private RedisUtil redisUtil;
 
+    @Autowired
+    private SysUserService sysUserService;
+
     @RequestMapping(value = "/redis_set.do")
     @ResponseBody
     public String redisDemoSet01(){
@@ -23,6 +30,12 @@ public class RedisDemoCotroller {
         user.setPassword("123456");
         user.setUserName("邬思道");
         redisUtil.set("user1", user);
+
+        Page<SysUser> page = new Page<>(1,3);
+        IPage<SysUser> sysUserIPage = sysUserService.selectPageVo(page, "");
+        redisUtil.setnx("sysUserIPage", sysUserIPage);
+
+
         System.out.println("set redis cache success");
 
         return "success";
