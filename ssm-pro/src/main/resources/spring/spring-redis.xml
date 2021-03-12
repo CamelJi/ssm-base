@@ -9,20 +9,21 @@
         https://www.springframework.org/schema/context/spring-context.xsd">
 
 
-<!--    <context:property-placeholder location="classpath:config/redis.properties" ignore-unresolvable="true"/>-->
+    <context:property-placeholder location="classpath:config/redis.properties"
+                                  ignore-unresolvable="true" order="2"/>
 
     <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig"
-        p:maxIdle="300"
-        p:minIdle="5"
-        p:maxWaitMillis="1000"
-        p:testOnBorrow="true"/>
+        p:maxIdle="${redis.maxIdle}"
+        p:minIdle="${redis.minIdle}"
+        p:maxWaitMillis="${redis.maxWaitMillis}"
+        p:testOnBorrow="${redis.testOnBorrow}"/>
 
     <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
-        p:host-name="119.28.83.126"
-        p:port="6379"
-        p:password="123456"
+        p:host-name="${redis.host}"
+        p:port="${redis.port}"
+        p:password="${redis.password}"
         p:pool-config-ref="jedisPoolConfig"
-        p:database="0"/>
+        p:database="${redis.database}"/>
 
     <bean id="fastJson2JsonRedisSerializer" class="com.msi.config.FastJson2JsonRedisSerializer"/>
 
